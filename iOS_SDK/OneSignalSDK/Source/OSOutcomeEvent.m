@@ -31,7 +31,7 @@
 
 @implementation OSOutcomeEvent
 
-- (id _Nonnull)initWithSession:(Session)session
+- (id _Nonnull)initWithSession:(OSSession)session
                notificationIds:(NSArray * _Nullable)notificationIds
                           name:(NSString * _Nonnull)name
                      timestamp:(NSNumber * _Nonnull)timestamp

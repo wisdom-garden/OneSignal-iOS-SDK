@@ -31,13 +31,13 @@
 
 @implementation OSSessionResult
 
-- (id)init:(Session)session {
+- (id)init:(OSSession)session {
     _session = session;
     _notificationIds = nil;
     return self;
 }
 
-- (id)init:(Session)session withNotificationIds:(NSArray *)notificationIds {
+- (id)init:(OSSession)session withNotificationIds:(NSArray *)notificationIds {
     _session = session;
     _notificationIds = notificationIds;
     return self;

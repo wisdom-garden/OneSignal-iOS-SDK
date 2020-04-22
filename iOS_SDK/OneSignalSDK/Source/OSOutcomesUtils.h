@@ -29,7 +29,7 @@
 
 @interface OSOutcomesUtils : NSObject
 
-+ (BOOL)isAttributedSession:(Session)session;
++ (BOOL)isAttributedSession:(OSSession)session;
 
 // Methods for outcome params
 + (NSInteger)getIndirectNotificationLimit;
@@ -40,8 +40,8 @@
 + (void)saveOutcomeParamsForApp:(NSDictionary *)params;
 
 // Methods for caching session related data
-+ (Session)getCachedSession;
-+ (void)saveSession:(Session)session;
++ (OSSession)getCachedSession;
++ (void)saveSession:(OSSession)session;
 + (NSString *)getCachedDirectNotificationId;
 + (void)saveDirectNotificationId:(NSString *)notificationId;
 + (NSArray *)getCachedIndirectNotificationIds;

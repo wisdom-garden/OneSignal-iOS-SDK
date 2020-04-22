@@ -83,7 +83,7 @@
     2. Is DIRECT session data different from incoming DIRECT session data?
     3. Is INDIRECT session data different from incoming INDIRECT session data?
  */
-- (BOOL)willChangeSession:(Session)session directNotificationId:(NSString *)directNotificationId indirectNotificationIds:(NSArray *)indirectNotificationIds {
+- (BOOL)willChangeSession:(OSSession)session directNotificationId:(NSString *)directNotificationId indirectNotificationIds:(NSArray *)indirectNotificationIds {
     if (self.session != session)
         return true;
 
@@ -109,7 +109,7 @@
     return false;
 }
 
-- (Session)getSession {
+- (OSSession)getSession {
     return self.session;
 }
 
@@ -126,7 +126,7 @@
 /*
  Called when the session for the app changes, caches the state, and broadcasts the session that just ended
  */
-- (void)setSession:(Session)session directNotificationId:(NSString *)directNotificationId indirectNotificationIds:(NSArray *)indirectNotificationIds {
+- (void)setSession:(OSSession)session directNotificationId:(NSString *)directNotificationId indirectNotificationIds:(NSArray *)indirectNotificationIds {
     if (![self willChangeSession:session directNotificationId:directNotificationId indirectNotificationIds:indirectNotificationIds])
         return;
     

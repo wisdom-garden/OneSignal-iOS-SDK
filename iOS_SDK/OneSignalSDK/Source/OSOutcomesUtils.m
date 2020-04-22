@@ -35,7 +35,7 @@
 
 @implementation OSOutcomesUtils
 
-+ (BOOL)isAttributedSession:(Session)session {
++ (BOOL)isAttributedSession:(OSSession)session {
     return session == DIRECT || session == INDIRECT;
 }
 
@@ -111,12 +111,12 @@
     [OneSignalUserDefaults.initShared saveBoolForKey:key withValue:enabled];
 }
 
-+ (Session)getCachedSession {
++ (OSSession)getCachedSession {
     NSString *sessionString = [OneSignalUserDefaults.initShared getSavedStringForKey:OSUD_CACHED_SESSION defaultValue:OS_SESSION_TO_STRING(UNATTRIBUTED)];
     return OS_SESSION_FROM_STRING(sessionString);
 }
 
-+ (void)saveSession:(Session)session {
++ (void)saveSession:(OSSession)session {
     [OneSignalUserDefaults.initShared saveStringForKey:OSUD_CACHED_SESSION withValue:OS_SESSION_TO_STRING(session)];
 }
 

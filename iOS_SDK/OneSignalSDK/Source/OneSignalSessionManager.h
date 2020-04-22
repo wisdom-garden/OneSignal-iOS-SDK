@@ -37,13 +37,13 @@
 
 @property (nonatomic) id<SessionStatusDelegate> _Nonnull delegate;
 
-@property (nonatomic) Session session;
+@property (nonatomic) OSSession session;
 @property (strong, nonatomic, nullable) NSString *directNotificationId;
 @property (strong, nonatomic, nullable) NSArray *indirectNotificationIds;
 
 - (instancetype _Nonnull)init:(Class<SessionStatusDelegate> _Nonnull)delegate;
 
-- (Session)getSession;
+- (OSSession)getSession;
 - (NSArray * _Nullable)getNotificationIds;
 - (OSSessionResult * _Nonnull)getSessionResult;
 - (OSSessionResult * _Nonnull)getIAMSessionResult;
