@@ -94,39 +94,42 @@ static UNNotificationSettings* cachedUNNotificationSettings;
 // This is a swizzled implementation of requestAuthorizationWithOptions:
 // in case developers call it directly instead of using our prompt method
 - (void)onesignalRequestAuthorizationWithOptions:(UNAuthorizationOptions)options completionHandler:(void (^)(BOOL granted, NSError *__nullable error))completionHandler {
-    
-    // check options for UNAuthorizationOptionProvisional membership
-    BOOL notProvisionalRequest = (options & PROVISIONAL_UNAUTHORIZATIONOPTION) == 0;
-    
-    //we don't want to modify these settings if the authorization is provisional (iOS 12 'Direct to History')
-    if (notProvisionalRequest)
-        OneSignal.currentPermissionState.hasPrompted = true;
-    
-    useCachedUNNotificationSettings = true;
-    id wrapperBlock = ^(BOOL granted, NSError* error) {
-        useCachedUNNotificationSettings = false;
-        if (notProvisionalRequest) {
-            OneSignal.currentPermissionState.accepted = granted;
-            OneSignal.currentPermissionState.answeredPrompt = true;
-        }
-        completionHandler(granted, error);
-    };
-    
-    [self onesignalRequestAuthorizationWithOptions:options completionHandler:wrapperBlock];
+    if ([OneSignal app_id]) {
+        // check options for UNAuthorizationOptionProvisional membership
+        BOOL notProvisionalRequest = (options & PROVISIONAL_UNAUTHORIZATIONOPTION) == 0;
+
+        //we don't want to modify these settings if the authorization is provisional (iOS 12 'Direct to History')
+        if (notProvisionalRequest)
+            OneSignal.currentPermissionState.hasPrompted = true;
+
+        useCachedUNNotificationSettings = true;
+        id wrapperBlock = ^(BOOL granted, NSError* error) {
+            useCachedUNNotificationSettings = false;
+            if (notProvisionalRequest) {
+                OneSignal.currentPermissionState.accepted = granted;
+                OneSignal.currentPermissionState.answeredPrompt = true;
+            }
+            completionHandler(granted, error);
+        };
+
+        [self onesignalRequestAuthorizationWithOptions:options completionHandler:wrapperBlock];
+    }
 }
 
 - (void)onesignalGetNotificationSettingsWithCompletionHandler:(void(^)(UNNotificationSettings *settings))completionHandler {
-    if (useCachedUNNotificationSettings && cachedUNNotificationSettings && useiOS10_2_workaround) {
-        completionHandler(cachedUNNotificationSettings);
-        return;
-    }
-    
-    id wrapperBlock = ^(UNNotificationSettings* settings) {
-        cachedUNNotificationSettings = settings;
-        completionHandler(settings);
-    };
-    
-    [self onesignalGetNotificationSettingsWithCompletionHandler:wrapperBlock];
+     if ([OneSignal app_id]) {
+        if (useCachedUNNotificationSettings && cachedUNNotificationSettings && useiOS10_2_workaround) {
+            completionHandler(cachedUNNotificationSettings);
+            return;
+        }
+
+        id wrapperBlock = ^(UNNotificationSettings* settings) {
+            cachedUNNotificationSettings = settings;
+            completionHandler(settings);
+        };
+
+        [self onesignalGetNotificationSettingsWithCompletionHandler:wrapperBlock];
+     }
 }
 
 // Take the received delegate and swizzle in our own hooks.
